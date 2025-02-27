@@ -1,67 +1,158 @@
-<div class="spotify-container">
-  <iframe 
-    class="spotify-player"
-    src="https://open.spotify.com/embed/track/09SNuR471zu5nVvC4IVG8j?utm_source=generator" 
-    width="100%" 
-    height="200" 
-    frameBorder="0" 
-    allowfullscreen="" 
-    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-    loading="lazy">
-  </iframe>
-  <div class="glow-effect"></div>
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+:root {
+  --neon-color: #1db954;
+  --bg-color: #0a0a0a;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: var(--bg-color);
+  margin: 0;
+  overflow: hidden;
+  font-family: 'Arial', sans-serif;
+}
+
+.cyber-container {
+  position: relative;
+  max-width: 800px;
+  margin: 2rem auto;
+  border-radius: 20px;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.cyber-wrapper {
+  position: relative;
+  transform-style: preserve-3d;
+  animation: float 6s ease-in-out infinite;
+}
+
+.spotify-container {
+  position: relative;
+  padding: 15px;
+  background: linear-gradient(45deg, 
+    rgba(29, 185, 84, 0.2), 
+    rgba(25, 20, 20, 0.8));
+  border-radius: 20px;
+  backdrop-filter: blur(15px);
+  transform: translateZ(30px);
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.spotify-container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(45deg, 
+    var(--neon-color) 20%, 
+    transparent 50%, 
+    var(--neon-color) 80%);
+  z-index: -1;
+  animation: gradientMove 4s linear infinite;
+  mask: 
+     linear-gradient(#000 0 0) content-box, 
+     linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  padding: 2px;
+  border-radius: 22px;
+}
+
+.spotify-player {
+  width: 100%;
+  height: 200px;
+  border: none;
+  border-radius: 15px;
+  background: rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 30px rgba(29, 185, 84, 0.2);
+}
+
+.neon-glow {
+  position: absolute;
+  inset: -5px;
+  filter: blur(20px);
+  background: linear-gradient(45deg, 
+    #1db954, 
+    #191414, 
+    #1db954);
+  z-index: -2;
+  opacity: 0.5;
+  animation: glowPulse 3s ease infinite;
+}
+
+.particles {
+  position: absolute;
+  inset: -50px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+@keyframes particles {
+  0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+  100% { transform: translateY(-100vh) rotate(360deg); opacity: 1; }
+}
+
+.particles span {
+  position: absolute;
+  background: radial-gradient(var(--neon-color), transparent);
+  animation: particles 4s linear infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotateX(0deg) rotateY(0deg); }
+  50% { transform: translateY(-20px) rotateX(5deg) rotateY(5deg); }
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.05); }
+}
+
+/* إنشاء جزيئات ديناميكية */
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const particles = document.createElement('div');
+  particles.className = 'particles';
+  
+  for(let i = 0; i < 50; i++) {
+    const particle = document.createElement('span');
+    particle.style.left = Math.random() * 100 + '%';
+    particle.style.width = particle.style.height = Math.random() * 3 + 'px';
+    particle.style.animationDelay = Math.random() * 4 + 's';
+    particles.appendChild(particle);
+  }
+  
+  document.querySelector('.cyber-container').appendChild(particles);
+});
+</script>
+</style>
+</head>
+<body>
+
+<div class="cyber-container">
+  <div class="cyber-wrapper">
+    <div class="spotify-container">
+      <iframe
+        class="spotify-player"
+        src="https://open.spotify.com/embed/track/09SNuR471zu5nVvC4IVG8j?utm_source=generator"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy">
+      </iframe>
+    </div>
+    <div class="neon-glow"></div>
+  </div>
 </div>
 
-<style>
-  .spotify-container {
-    position: relative;
-    max-width: 800px;
-    margin: 2rem auto;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 255, 170, 0.3);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    background: linear-gradient(45deg, #1db954, #191414);
-    padding: 10px;
-  }
-
-  .spotify-container:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 15px 40px rgba(29, 185, 84, 0.5);
-  }
-
-  .spotify-player {
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    border-radius: 15px;
-    backdrop-filter: blur(5px);
-    background: rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
-  }
-
-  .glow-effect {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: 20px;
-    animation: pulse 3s infinite;
-    pointer-events: none;
-  }
-
-  @keyframes pulse {
-    0% { box-shadow: 0 0 20px rgba(29, 185, 84, 0.3); }
-    50% { box-shadow: 0 0 40px rgba(29, 185, 84, 0.6); }
-    100% { box-shadow: 0 0 20px rgba(29, 185, 84, 0.3); }
-  }
-
-  body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: #0a0a0a;
-    margin: 0;
-    padding: 20px;
-  }
-</style>
+</body>
+</html>
